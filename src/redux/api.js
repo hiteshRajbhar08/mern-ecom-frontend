@@ -5,5 +5,6 @@ export const API = axios.create({
   credentials: 'include',
 });
 
-export const getProducts = () => API.get('/api/v1/products');
+export const getProducts = (keyword) =>
+  API.get(`/api/v1/products?keyword=${keyword}`);
 export const getProductDetails = (id) => API.get(`/api/v1/product/${id}`);

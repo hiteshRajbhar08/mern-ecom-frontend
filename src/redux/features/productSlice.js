@@ -4,9 +4,9 @@ import * as api from '../api';
 // get all products
 export const getProducts = createAsyncThunk(
   '/product/getProducts',
-  async (_, thunkAPI) => {
+  async (keyword = '', thunkAPI) => {
     try {
-      const response = await api.getProducts();
+      const response = await api.getProducts(keyword);
       return response.data;
     } catch (err) {
       return thunkAPI.rejectWithValue(err.response.data.message);
