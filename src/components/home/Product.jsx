@@ -8,7 +8,7 @@ const Product = ({ product }) => {
     color: 'rgba(20,20,20,0.1)',
     activeColor: 'tomato',
     size: window.innerWidth < 600 ? 20 : 25,
-    value: 2.5,
+    value: product.rating,
     isHalf: true,
   };
 
@@ -18,9 +18,9 @@ const Product = ({ product }) => {
       <p>{product.name}</p>
       <div>
         <ReactStars {...options} className="ratingClass" />
-        <span>(26 reviews)</span>
+        <span>({product.noOfReviews} reviews)</span>
       </div>
-      <span>₹{product.price}</span>
+      <span>{`₹${product.price}`}</span>
     </Link>
   );
 };

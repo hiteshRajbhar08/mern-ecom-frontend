@@ -1,37 +1,52 @@
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { CgMouse } from 'react-icons/cg';
 import MetaData from '../layout/MetaData';
 import './Home.css';
 import Product from './Product';
-
-const product = {
-  name: 'Blue Shirt',
-  images: [
-    {
-      url: 'https://i.ibb.co/DRST11n/1.webp',
-    },
-  ],
-  price: '₹3000',
-  _id: '01',
-};
+import { getProducts } from '../../redux/features/productSlice';
+import Loader from '../layout/loader/Loader';
+import { useAlert } from 'react-alert';
 
 const Home = () => {
+  const dispatch = useDispatch();
+  const alert = useAlert();
+
+  const { loading, error, products } = useSelector((state) => state.product);
+
+  useEffect(() => {
+    if (error) {
+      return alert.error(error);
+    }
+    dispatch(getProducts());
+  }, [dispatch, alert, error]);
+
   return (
     <>
-      <MetaData title={'e-com'} />
-      <div className="banner">
-        <p>Welcome to Ecommerce</p>
-        <h1>FIND AMAZING PRODUCTS BELOW</h1>
+      {loading ? (
+        <Loader />
+      ) : (
+        <>
+          <MetaData title={'e-com'} />
+          <div className="banner">
+            <p>Welcome to Ecommerce</p>
+            <h1>FIND AMAZING PRODUCTS BELOW</h1>
 
-        <a href="#container">
-          <button>
-            Scroll <CgMouse />
-          </button>
-        </a>
-      </div>
-      <h2 className="homeHeading">Featured Products</h2>
-      <div className="container" id="container">
-        <Product product={product} />
-      </div>
+            <a href="#container">
+              <button>
+                Scroll <CgMouse />
+              </button>
+            </a>
+          </div>
+          <h2 className="homeHeading">Featured Products</h2>
+          <div className="container" id="container">
+            {products &&
+              products.map((product) => (
+                <Product key={product._id} product={product} />
+              ))}
+          </div>
+        </>
+      )}
     </>
   );
 };
