@@ -4,18 +4,12 @@ import * as api from '../api';
 // get all products
 export const getProducts = createAsyncThunk(
   '/product/getProducts',
-  async (keyword = '', thunkAPI) => {
+  async (_, thunkAPI) => {
     try {
-      const res = await api.getProducts(keyword);
-      return res.data;
-    } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      return thunkAPI.rejectWithValue(message);
+      const response = await api.getProducts();
+      return response.data;
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err.response.data.message);
     }
   }
 );
@@ -25,16 +19,10 @@ export const getProductDetails = createAsyncThunk(
   '/product/getProductDetails',
   async (id, thunkAPI) => {
     try {
-      const res = await api.getProductDetails(id);
-      return res.data;
+      const response = await api.getProductDetails(id);
+      return response.data;
     } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      return thunkAPI.rejectWithValue(message);
+      return thunkAPI.rejectWithValue(error.response.data.message);
     }
   }
 );
@@ -43,7 +31,6 @@ const productSlice = createSlice({
   name: 'products',
   initialState: {
     products: [],
-    productsCount: 0,
     product: {},
     loading: false,
     error: null,
@@ -61,7 +48,6 @@ const productSlice = createSlice({
       .addCase(getProducts.fulfilled, (state, action) => {
         state.loading = false;
         state.products = action.payload.products;
-        state.productsCount = action.payload.productsCount;
       })
       .addCase(getProducts.rejected, (state, action) => {
         state.loading = false;

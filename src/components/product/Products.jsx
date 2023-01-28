@@ -6,15 +6,12 @@ import MetaData from '../layout/MetaData';
 import Product from '../home/Product';
 import { useEffect } from 'react';
 import { clearErrors, getProducts } from '../../redux/features/productSlice';
-import { useParams } from 'react-router-dom';
 
 const Products = () => {
   const dispatch = useDispatch();
   const alert = useAlert();
 
-  const { loading, error, products } = useSelector((state) => state.product);
-
-  const { keyword } = useParams();
+  const { products, loading, error } = useSelector((state) => state.product);
 
   useEffect(() => {
     if (error) {
@@ -22,8 +19,8 @@ const Products = () => {
       dispatch(clearErrors());
     }
 
-    dispatch(getProducts(keyword));
-  }, [dispatch, alert, error, keyword]);
+    dispatch(getProducts());
+  }, [dispatch, error, alert]);
 
   return (
     <>
