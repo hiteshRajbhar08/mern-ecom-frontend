@@ -1,4 +1,5 @@
 import { CgMouse } from 'react-icons/cg';
+import MetaData from '../layout/MetaData';
 import './Home.css';
 import Product from './Product';
 
@@ -16,6 +17,7 @@ const product = {
 const Home = () => {
   return (
     <>
+      <MetaData title={'e-com'} />
       <div className="banner">
         <p>Welcome to Ecommerce</p>
         <h1>FIND AMAZING PRODUCTS BELOW</h1>
