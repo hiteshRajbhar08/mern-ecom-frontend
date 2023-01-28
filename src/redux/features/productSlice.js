@@ -4,9 +4,9 @@ import * as api from '../api';
 // get all products
 export const getProducts = createAsyncThunk(
   '/product/getProducts',
-  async (_, thunkAPI) => {
+  async (keyword = '', thunkAPI) => {
     try {
-      const res = await api.getProducts();
+      const res = await api.getProducts(keyword);
       return res.data;
     } catch (error) {
       const message =
@@ -43,10 +43,10 @@ const productSlice = createSlice({
   name: 'products',
   initialState: {
     products: [],
+    productsCount: 0,
     product: {},
     loading: false,
     error: null,
-    productsCount: 0,
   },
   reducers: {
     clearErrors: (state, action) => {

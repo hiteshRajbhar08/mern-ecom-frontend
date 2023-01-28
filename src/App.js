@@ -6,6 +6,8 @@ import Home from './components/home/Home';
 import Footer from './components/layout/footer/Footer';
 import Header from './components/layout/header/Header';
 import ProductDetails from './components/product/ProductDetails';
+import Products from './components/product/Products';
+import Search from './components/product/Search';
 
 const App = () => {
   useEffect(() => {
@@ -22,6 +24,9 @@ const App = () => {
       <main>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/products" element={<Products />} />
+          <Route path="/products/:keyword" element={<Products />} />
+          <Route path="/search" element={<Search />} />
           <Route path="/product/:id" element={<ProductDetails />} />
         </Routes>
       </main>

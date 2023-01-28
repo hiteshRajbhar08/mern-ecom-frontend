@@ -67,7 +67,7 @@ const ProductDetails = () => {
               <div className="detailsBlock-2">
                 <ReactStars {...options} />
                 <span className="detailsBlock-2-span">
-                  ({product.numOfReviews} Reviews)
+                  ({product.noOfReviews} Reviews)
                 </span>
               </div>
               <div className="detailsBlock-3">
