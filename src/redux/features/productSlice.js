@@ -20,10 +20,30 @@ export const getProducts = createAsyncThunk(
   }
 );
 
+// get product details
+export const getProductDetails = createAsyncThunk(
+  '/product/getProductDetails',
+  async (id, thunkAPI) => {
+    try {
+      const res = await api.getProductDetails(id);
+      return res.data;
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 const productSlice = createSlice({
   name: 'products',
   initialState: {
     products: [],
+    productDetails: {},
     loading: false,
     error: null,
     productsCount: 0,
@@ -44,6 +64,17 @@ const productSlice = createSlice({
         state.productsCount = action.payload.productsCount;
       })
       .addCase(getProducts.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(getProductDetails.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getProductDetails.fulfilled, (state, action) => {
+        state.loading = false;
+        state.productDetails = action.payload.product;
+      })
+      .addCase(getProductDetails.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });
