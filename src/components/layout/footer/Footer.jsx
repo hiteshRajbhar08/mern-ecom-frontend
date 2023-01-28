@@ -14,7 +14,7 @@ const Footer = () => {
 
       <div className="midFooter">
         <h1>ECOMMERCE.</h1>
-        <p>High Quality is our first priority</p>
+        <p>High Quality products in cheap rates.</p>
         <p>
           &copy; {new Date().getFullYear()} e-com, Inc. All rights reserved.
         </p>
