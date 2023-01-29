@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useAlert } from 'react-alert';
-import { Link } from 'react-router-dom';
-import { registerUser } from '../../redux/features/user/userSlice';
+import { Link, useNavigate } from 'react-router-dom';
+import { clearErrors, registerUser } from '../../redux/features/user/userSlice';
 
 const Register = () => {
   const [user, setUser] = useState({
@@ -22,6 +22,18 @@ const Register = () => {
 
   const alert = useAlert();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/account');
+    }
+
+    if (error) {
+      alert.error(error);
+      dispatch(clearErrors());
+    }
+  }, [dispatch, alert, isAuthenticated, error, navigate]);
 
   const onChange = (e) => {
     if (e.target.name === 'avatar') {
@@ -49,6 +61,7 @@ const Register = () => {
     myForm.set('avatar', avatar);
 
     dispatch(registerUser(myForm));
+    alert.success('Register Successfully');
   };
 
   return (
