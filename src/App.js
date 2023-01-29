@@ -8,8 +8,9 @@ import Header from './components/layout/header/Header';
 import ProductDetails from './components/product/ProductDetails';
 import Products from './components/product/Products';
 import Search from './components/product/Search';
-import LoginAndSignUp from './components/user/LoginAndSignUp';
 import axios from 'axios';
+import Login from './components/user/Login';
+import Register from './components/user/Register';
 
 axios.defaults.withCredentials = true;
 
@@ -31,7 +32,8 @@ const App = () => {
           <Route path="/products" element={<Products />} />
           <Route path="/products/:keyword" element={<Products />} />
           <Route path="/search" element={<Search />} />
-          <Route path="/login" element={<LoginAndSignUp />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
           <Route path="/product/:id" element={<ProductDetails />} />
         </Routes>
       </main>
