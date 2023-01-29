@@ -1,12 +1,66 @@
+import { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useAlert } from 'react-alert';
 import { Link } from 'react-router-dom';
+import { registerUser } from '../../redux/features/user/userSlice';
 
 const Register = () => {
+  const [user, setUser] = useState({
+    name: '',
+    email: '',
+    password: '',
+  });
+
+  const { name, email, password } = user;
+
+  const [avatar, setAvatar] = useState('/Profile.png');
+  const [avatarPreview, setAvatarPreview] = useState('/Profile.png');
+
+  const { isAuthenticated, error, loading } = useSelector(
+    (state) => state.user
+  );
+
+  const alert = useAlert();
+  const dispatch = useDispatch();
+
+  const onChange = (e) => {
+    if (e.target.name === 'avatar') {
+      const reader = new FileReader();
+      reader.onload = () => {
+        if (reader.readyState === 2) {
+          setAvatarPreview(reader.result);
+          setAvatar(reader.result);
+        }
+      };
+      reader.readAsDataURL(e.target.files[0]);
+    } else {
+      setUser({ ...user, [e.target.name]: e.target.value });
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const myForm = new FormData();
+
+    myForm.set('name', name);
+    myForm.set('email', email);
+    myForm.set('password', password);
+    myForm.set('avatar', avatar);
+
+    dispatch(registerUser(myForm));
+  };
+
   return (
     <>
       <div className="row wrapper">
         <div className="col-10 col-lg-5">
-          <form className="shadow-lg" encType="multipart/form-data">
-            <h1 className="mb-3">Register</h1>
+          <form
+            className="shadow-lg"
+            encType="multipart/form-data"
+            onSubmit={handleSubmit}
+          >
+            <h1 className="mb-3 text-center">Register</h1>
 
             <div className="form-group">
               <label htmlFor="email_field">Name</label>
@@ -15,6 +69,9 @@ const Register = () => {
                 id="name_field"
                 className="form-control"
                 name="name"
+                placeholder="Enter Name"
+                value={name}
+                onChange={onChange}
               />
             </div>
 
@@ -25,6 +82,9 @@ const Register = () => {
                 id="email_field"
                 className="form-control"
                 name="email"
+                placeholder="Enter Email"
+                value={email}
+                onChange={onChange}
               />
             </div>
 
@@ -35,6 +95,9 @@ const Register = () => {
                 id="password_field"
                 className="form-control"
                 name="password"
+                placeholder="Enter Password"
+                value={password}
+                onChange={onChange}
               />
             </div>
 
@@ -43,7 +106,11 @@ const Register = () => {
               <div className="d-flex align-items-center">
                 <div>
                   <figure className="avatar mr-3 item-rtl">
-                    <img className="rounded-circle" alt="Avatar Preview" />
+                    <img
+                      src={avatarPreview}
+                      className="rounded-circle"
+                      alt="Avatar Preview"
+                    />
                   </figure>
                 </div>
                 <div className="custom-file">
@@ -53,6 +120,7 @@ const Register = () => {
                     className="custom-file-input"
                     id="customFile"
                     accept="iamges/*"
+                    onChange={onChange}
                   />
                   <label className="custom-file-label" htmlFor="customFile">
                     Choose Avatar
@@ -65,6 +133,7 @@ const Register = () => {
               id="register_button"
               type="submit"
               className="btn btn-block py-3"
+              disabled={loading ? true : false}
             >
               REGISTER
             </button>

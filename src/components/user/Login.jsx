@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useAlert } from 'react-alert';
 import MetaData from '../layout/MetaData';
@@ -17,8 +17,11 @@ const Login = () => {
 
   const alert = useAlert();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const { loading, error } = useSelector((state) => state.user);
+  const { loading, error, isAuthenticated } = useSelector(
+    (state) => state.user
+  );
 
   const onInputChange = (e) => {
     const { name, value } = e.target;
@@ -30,6 +33,7 @@ const Login = () => {
 
     if (email && password) {
       dispatch(loginUser(formValue));
+      alert.success('Login Successfully');
     }
   };
 
@@ -38,7 +42,10 @@ const Login = () => {
       alert.error(error);
       dispatch(clearErrors());
     }
-  }, [dispatch, error, alert]);
+    if (isAuthenticated) {
+      navigate('/acount');
+    }
+  }, [dispatch, error, alert, isAuthenticated, navigate]);
 
   return (
     <>
@@ -58,6 +65,7 @@ const Login = () => {
                     id="email_field"
                     className="form-control"
                     value={email}
+                    placeholder="Enter Email"
                     name="email"
                     onChange={onInputChange}
                     required
@@ -71,6 +79,7 @@ const Login = () => {
                     id="password_field"
                     className="form-control"
                     value={password}
+                    placeholder="Enter Password"
                     name="password"
                     onChange={onInputChange}
                     required
