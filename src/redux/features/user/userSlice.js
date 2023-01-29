@@ -25,6 +25,18 @@ export const registerUser = createAsyncThunk(
   }
 );
 
+// load user
+export const loadUser = createAsyncThunk(
+  'user/loadUser',
+  async (_, thunkAPI) => {
+    try {
+      return await userService.loadUser();
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err.response.data.message);
+    }
+  }
+);
+
 const userSlice = createSlice({
   name: 'user',
   initialState: {
@@ -64,6 +76,20 @@ const userSlice = createSlice({
         state.isAuthenticated = true;
       })
       .addCase(registerUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+        state.isAuthenticated = false;
+      })
+      .addCase(loadUser.pending, (state) => {
+        state.loading = true;
+        state.isAuthenticated = false;
+      })
+      .addCase(loadUser.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload.user;
+        state.isAuthenticated = true;
+      })
+      .addCase(loadUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
         state.isAuthenticated = false;

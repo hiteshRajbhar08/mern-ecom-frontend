@@ -16,9 +16,16 @@ const registerUser = async (formValue) => {
   return response.data;
 };
 
+// load user
+const loadUser = async () => {
+  const response = await axios.get('api/v1/me');
+  return response.data;
+};
+
 const userService = {
   loginUser,
   registerUser,
+  loadUser,
 };
 
 export default userService;

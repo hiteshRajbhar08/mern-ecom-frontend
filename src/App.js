@@ -11,6 +11,8 @@ import Search from './components/product/Search';
 import axios from 'axios';
 import Login from './components/user/Login';
 import Register from './components/user/Register';
+import store from './redux/store';
+import { loadUser } from './redux/features/user/userSlice';
 
 axios.defaults.withCredentials = true;
 
@@ -21,6 +23,7 @@ const App = () => {
         families: ['Roboto', 'Droid Sans', 'Chilanka'],
       },
     });
+    store.dispatch(loadUser());
   }, []);
 
   return (
