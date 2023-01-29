@@ -9,6 +9,9 @@ import ProductDetails from './components/product/ProductDetails';
 import Products from './components/product/Products';
 import Search from './components/product/Search';
 import LoginAndSignUp from './components/user/LoginAndSignUp';
+import axios from 'axios';
+
+axios.defaults.withCredentials = true;
 
 const App = () => {
   useEffect(() => {

@@ -4,7 +4,10 @@ import { CgMouse } from 'react-icons/cg';
 import MetaData from '../layout/MetaData';
 import './Home.css';
 import Product from './Product';
-import { clearErrors, getProducts } from '../../redux/features/productSlice';
+import {
+  clearErrors,
+  getProducts,
+} from '../../redux/features/product/productSlice';
 import Loader from '../layout/loader/Loader';
 import { useAlert } from 'react-alert';
 

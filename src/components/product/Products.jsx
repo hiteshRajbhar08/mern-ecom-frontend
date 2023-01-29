@@ -5,7 +5,10 @@ import { useAlert } from 'react-alert';
 import MetaData from '../layout/MetaData';
 import Product from '../home/Product';
 import { useEffect } from 'react';
-import { clearErrors, getProducts } from '../../redux/features/productSlice';
+import {
+  clearErrors,
+  getProducts,
+} from '../../redux/features/product/productSlice';
 import { useParams } from 'react-router-dom';
 
 const Products = () => {

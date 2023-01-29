@@ -6,7 +6,7 @@ import { useParams } from 'react-router-dom';
 import {
   clearErrors,
   getProductDetails,
-} from '../../redux/features/productSlice';
+} from '../../redux/features/product/productSlice';
 import { useAlert } from 'react-alert';
 import Loader from '../layout/loader/Loader';
 import MetaData from '../layout/MetaData';
