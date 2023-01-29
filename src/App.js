@@ -13,10 +13,14 @@ import Login from './components/user/Login';
 import Register from './components/user/Register';
 import store from './redux/store';
 import { loadUser } from './redux/features/user/userSlice';
+import { useSelector } from 'react-redux';
+import UserOptions from './components/layout/header/UserOptions';
 
 axios.defaults.withCredentials = true;
 
 const App = () => {
+  const { isAuthenticated, user } = useSelector((state) => state.user);
+
   useEffect(() => {
     WebFont.load({
       google: {
@@ -29,6 +33,7 @@ const App = () => {
   return (
     <Router>
       <Header />
+      {isAuthenticated && <UserOptions user={user} />}
       <main>
         <Routes>
           <Route path="/" element={<Home />} />

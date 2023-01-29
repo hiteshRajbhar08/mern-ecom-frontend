@@ -22,10 +22,16 @@ const loadUser = async () => {
   return response.data;
 };
 
+// logout user
+const logoutUser = async () => {
+  await axios.get('/api/v1/logout');
+};
+
 const userService = {
   loginUser,
   registerUser,
   loadUser,
+  logoutUser,
 };
 
 export default userService;
