@@ -6,7 +6,7 @@ import {
 } from '@mui/icons-material';
 import './CheckOutSteps.css';
 
-const CheckoutSteps = ({ activeStep }) => {
+const CheckOutSteps = ({ activeStep }) => {
   const steps = [
     {
       label: <Typography>Shipping Details</Typography>,
@@ -50,4 +50,4 @@ const CheckoutSteps = ({ activeStep }) => {
   );
 };
 
-export default CheckoutSteps;
+export default CheckOutSteps;

@@ -23,6 +23,7 @@ import ForgotPassword from './components/user/ForgotPassword';
 import ResetPassword from './components/user/ResetPassword';
 import Cart from './components/cart/Cart';
 import Shipping from './components/cart/Shipping';
+import ConfirmOrder from './components/cart/ConfirmOrder';
 
 axios.defaults.withCredentials = true;
 
@@ -82,6 +83,14 @@ const App = () => {
             element={
               <ProtectedRoute>
                 <Shipping />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/order/confirm"
+            element={
+              <ProtectedRoute>
+                <ConfirmOrder />
               </ProtectedRoute>
             }
           />
