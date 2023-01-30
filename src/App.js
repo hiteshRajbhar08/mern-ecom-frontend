@@ -33,8 +33,10 @@ const App = () => {
         families: ['Roboto', 'Droid Sans', 'Chilanka'],
       },
     });
-    store.dispatch(loadUser());
-  }, []);
+    if (user) {
+      store.dispatch(loadUser());
+    }
+  }, [user]);
 
   return (
     <Router>

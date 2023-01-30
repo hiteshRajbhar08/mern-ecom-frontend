@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Carousel from 'react-material-ui-carousel';
 import './ProductDetails.css';
 import { useSelector, useDispatch } from 'react-redux';
@@ -12,6 +12,7 @@ import Loader from '../layout/loader/Loader';
 import MetaData from '../layout/MetaData';
 import ReactStars from 'react-rating-stars-component';
 import ReviewCard from './ReviewCard';
+import { addToCart } from '../../redux/features/order/orderSlice';
 
 const ProductDetails = () => {
   const dispatch = useDispatch();
@@ -27,6 +28,34 @@ const ProductDetails = () => {
     size: window.innerWidth < 600 ? 20 : 25,
     value: product.rating,
     isHalf: true,
+  };
+
+  const [quantity, setQuantity] = useState(1);
+
+  const increaseQuantity = () => {
+    if (product.stock <= quantity) return;
+    const qty = quantity + 1;
+    setQuantity(qty);
+  };
+
+  const decreaseQuantity = () => {
+    if (quantity <= 1) return;
+    const qty = quantity - 1;
+    setQuantity(qty);
+  };
+
+  const addToCartHandler = () => {
+    const cartData = {
+      product: product._id,
+      name: product.name,
+      price: product.price,
+      image: product.images[0].url,
+      stock: product.stock,
+      quantity,
+    };
+
+    dispatch(addToCart(cartData));
+    alert.success('Item added to cart');
   };
 
   useEffect(() => {
@@ -74,11 +103,16 @@ const ProductDetails = () => {
                 <h1>{`₹${product.price}`}</h1>
                 <div className="detailsBlock-3-1">
                   <div className="detailsBlock-3-1-1">
-                    <button>-</button>
-                    <input type="number" value="1" readOnly />
-                    <button>+</button>
+                    <button onClick={decreaseQuantity}>-</button>
+                    <input readOnly type="number" value={quantity} />
+                    <button onClick={increaseQuantity}>+</button>
                   </div>
-                  <button>Add to Cart</button>
+                  <button
+                    disabled={product.Stock < 1 ? true : false}
+                    onClick={addToCartHandler}
+                  >
+                    Add to Cart
+                  </button>
                 </div>
                 <p>
                   Status:
