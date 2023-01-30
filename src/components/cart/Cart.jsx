@@ -8,12 +8,15 @@ import {
   addToCart,
   removeFromCart,
 } from '../../redux/features/order/orderSlice';
+import { useAlert } from 'react-alert';
 
 const Cart = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const alert = useAlert();
 
   const { cartItems } = useSelector((state) => state.order);
+  const { isAuthenticated } = useSelector((state) => state.user);
 
   const increaseQuantity = (item) => {
     const newQty = item.quantity + 1;
@@ -34,7 +37,12 @@ const Cart = () => {
   };
 
   const checkoutHandler = () => {
-    navigate('/login?redirect=shipping');
+    if (isAuthenticated) {
+      navigate('/shipping');
+    } else {
+      navigate('/login');
+      alert.error('Please login to add shipping details ');
+    }
   };
 
   return (

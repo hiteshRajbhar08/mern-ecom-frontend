@@ -6,6 +6,9 @@ const orderSlice = createSlice({
     cartItems: localStorage.getItem('cartItems')
       ? JSON.parse(localStorage.getItem('cartItems'))
       : [],
+    shippingInfo: localStorage.getItem('shippingInfo')
+      ? JSON.parse(localStorage.getItem('shippingInfo'))
+      : {},
     loading: false,
     error: null,
     success: false,
@@ -36,9 +39,15 @@ const orderSlice = createSlice({
       );
       localStorage.setItem('cartItems', JSON.stringify(state.cartItems));
     },
+    saveShippingInfo: (state, { payload }) => {
+      state.shippingInfo = payload;
+
+      localStorage.setItem('shippingInfo', JSON.stringify(payload));
+    },
   },
   extraReducers: {},
 });
 
-export const { addToCart, removeFromCart } = orderSlice.actions;
+export const { addToCart, removeFromCart, saveShippingInfo } =
+  orderSlice.actions;
 export default orderSlice.reducer;
