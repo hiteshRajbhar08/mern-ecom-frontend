@@ -4,7 +4,11 @@ import { useAlert } from 'react-alert';
 import MetaData from '../layout/MetaData';
 import Loader from '../layout/loader/Loader';
 import { useEffect, useState } from 'react';
-import { clearErrors, loginUser } from '../../redux/features/user/userSlice';
+import {
+  clearErrors,
+  loginUser,
+  resetSuccess,
+} from '../../redux/features/user/userSlice';
 
 const Login = () => {
   const initialState = {
@@ -43,6 +47,7 @@ const Login = () => {
     }
     if (success === true) {
       alert.success('Login Successfully');
+      dispatch(resetSuccess());
     }
     if (isAuthenticated) {
       navigate('/');

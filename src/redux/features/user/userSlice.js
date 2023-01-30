@@ -73,6 +73,18 @@ export const updateUserPassword = createAsyncThunk(
   }
 );
 
+// forgot password
+export const forgotPassword = createAsyncThunk(
+  'user/forgotPassword',
+  async (formValue, thunkAPI) => {
+    try {
+      return await userService.forgotPassword(formValue);
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err.response.data.message);
+    }
+  }
+);
+
 const userSlice = createSlice({
   name: 'user',
   initialState: {
@@ -86,6 +98,9 @@ const userSlice = createSlice({
   reducers: {
     clearErrors: (state, action) => {
       state.error = null;
+    },
+    resetSuccess: (state, action) => {
+      state.success = false;
     },
     resetProfileStatus: (state, action) => {
       state.isUserUpdated = false;
@@ -113,16 +128,19 @@ const userSlice = createSlice({
       .addCase(registerUser.pending, (state) => {
         state.loading = true;
         state.isAuthenticated = false;
+        state.success = false;
       })
       .addCase(registerUser.fulfilled, (state, action) => {
         state.loading = false;
         state.user = action.payload.user;
         state.isAuthenticated = true;
+        state.success = true;
       })
       .addCase(registerUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
         state.isAuthenticated = false;
+        state.success = false;
       })
       .addCase(loadUser.pending, (state) => {
         state.loading = true;
@@ -165,16 +183,33 @@ const userSlice = createSlice({
       })
       .addCase(updateUserPassword.pending, (state) => {
         state.loading = true;
+        state.success = false;
       })
       .addCase(updateUserPassword.fulfilled, (state, action) => {
         state.loading = false;
+        state.success = true;
       })
       .addCase(updateUserPassword.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+        state.success = false;
+      })
+      .addCase(forgotPassword.pending, (state) => {
+        state.loading = true;
+        state.success = false;
+      })
+      .addCase(forgotPassword.fulfilled, (state, action) => {
+        state.loading = false;
+        state.success = true;
+      })
+      .addCase(forgotPassword.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+        state.success = false;
       });
   },
 });
 
-export const { clearErrors, resetProfileStatus } = userSlice.actions;
+export const { clearErrors, resetProfileStatus, resetSuccess } =
+  userSlice.actions;
 export default userSlice.reducer;

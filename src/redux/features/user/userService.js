@@ -42,6 +42,12 @@ const updateUserPassword = async (formValue) => {
   return response.data;
 };
 
+// forgot password
+const forgotPassword = async (formValue) => {
+  const response = await axios.post('api/v1/password/forgot', formValue);
+  return response.data;
+};
+
 const userService = {
   loginUser,
   registerUser,
@@ -49,6 +55,7 @@ const userService = {
   logoutUser,
   updateUserProfile,
   updateUserPassword,
+  forgotPassword,
 };
 
 export default userService;

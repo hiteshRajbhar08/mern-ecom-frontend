@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   clearErrors,
+  resetSuccess,
   updateUserPassword,
 } from '../../redux/features/user/userSlice';
 
@@ -17,7 +18,7 @@ const UpdatePassword = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { loading, error } = useSelector((state) => state.user);
+  const { loading, error, success } = useSelector((state) => state.user);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -34,7 +35,11 @@ const UpdatePassword = () => {
       alert.error(error);
       dispatch(clearErrors());
     }
-  }, [error, dispatch, alert]);
+    if (success === true) {
+      alert.success('Password Update Successfully');
+      dispatch(resetSuccess());
+    }
+  }, [error, dispatch, alert, success]);
 
   return (
     <>

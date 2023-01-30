@@ -2,7 +2,11 @@ import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useAlert } from 'react-alert';
 import { Link, useNavigate } from 'react-router-dom';
-import { clearErrors, registerUser } from '../../redux/features/user/userSlice';
+import {
+  clearErrors,
+  registerUser,
+  resetSuccess,
+} from '../../redux/features/user/userSlice';
 
 const Register = () => {
   const [user, setUser] = useState({
@@ -16,7 +20,7 @@ const Register = () => {
   const [avatar, setAvatar] = useState('/Profile.png');
   const [avatarPreview, setAvatarPreview] = useState('/Profile.png');
 
-  const { isAuthenticated, error, loading } = useSelector(
+  const { isAuthenticated, error, loading, success } = useSelector(
     (state) => state.user
   );
 
@@ -25,6 +29,11 @@ const Register = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    if (success === true) {
+      alert.success('Register Successfully');
+      dispatch(resetSuccess());
+    }
+
     if (isAuthenticated) {
       navigate('/');
     }
@@ -33,7 +42,7 @@ const Register = () => {
       alert.error(error);
       dispatch(clearErrors());
     }
-  }, [dispatch, alert, isAuthenticated, error, navigate]);
+  }, [dispatch, alert, isAuthenticated, error, navigate, success]);
 
   const onChange = (e) => {
     if (e.target.name === 'avatar') {
