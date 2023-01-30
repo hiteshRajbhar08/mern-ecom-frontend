@@ -27,11 +27,21 @@ const logoutUser = async () => {
   await axios.get('/api/v1/logout');
 };
 
+// update user profile
+const updateUserProfile = async (userData) => {
+  const config = {
+    headers: { 'Content-Type': 'multipart/form-data' },
+  };
+  const response = await axios.put('api/v1/update/me', userData, config);
+  return response.data;
+};
+
 const userService = {
   loginUser,
   registerUser,
   loadUser,
   logoutUser,
+  updateUserProfile,
 };
 
 export default userService;

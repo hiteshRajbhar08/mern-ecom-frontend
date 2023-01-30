@@ -49,6 +49,18 @@ export const logoutUser = createAsyncThunk(
   }
 );
 
+// update user profile
+export const updateUserProfile = createAsyncThunk(
+  'user/updateUserProfile',
+  async (userData, thunkAPI) => {
+    try {
+      return await userService.updateUserProfile(userData);
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err.response.data.message);
+    }
+  }
+);
+
 const userSlice = createSlice({
   name: 'user',
   initialState: {
@@ -56,10 +68,15 @@ const userSlice = createSlice({
     error: '',
     loading: false,
     isAuthenticated: false,
+    isUserUpdated: false,
+    success: false,
   },
   reducers: {
     clearErrors: (state, action) => {
       state.error = null;
+    },
+    resetProfileStatus: (state, action) => {
+      state.isUserUpdated = false;
     },
   },
   extraReducers: (builder) => {
@@ -118,9 +135,21 @@ const userSlice = createSlice({
       .addCase(logoutUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+      })
+      .addCase(updateUserProfile.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(updateUserProfile.fulfilled, (state, action) => {
+        state.loading = false;
+        state.isUserUpdated = action.payload.success;
+        state.user = action.payload.user;
+      })
+      .addCase(updateUserProfile.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
       });
   },
 });
 
-export const { clearErrors } = userSlice.actions;
+export const { clearErrors, resetProfileStatus } = userSlice.actions;
 export default userSlice.reducer;
