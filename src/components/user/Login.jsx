@@ -19,7 +19,7 @@ const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { loading, error, isAuthenticated } = useSelector(
+  const { loading, error, isAuthenticated, success } = useSelector(
     (state) => state.user
   );
 
@@ -41,10 +41,13 @@ const Login = () => {
       alert.error(error);
       dispatch(clearErrors());
     }
+    if (success === true) {
+      alert.success('Login Successfully');
+    }
     if (isAuthenticated) {
       navigate('/');
     }
-  }, [dispatch, error, alert, isAuthenticated, navigate]);
+  }, [dispatch, error, success, alert, isAuthenticated, navigate]);
 
   return (
     <>

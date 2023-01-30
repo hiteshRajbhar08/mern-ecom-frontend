@@ -11,7 +11,6 @@ const registerUser = async (formValue) => {
   const config = {
     headers: { 'Content-Type': 'multipart/form-data' },
   };
-
   const response = await axios.post('api/v1/register', formValue, config);
   return response.data;
 };
@@ -33,6 +32,7 @@ const updateUserProfile = async (formValue) => {
     headers: { 'Content-Type': 'multipart/form-data' },
   };
   const response = await axios.put('api/v1/me/update', formValue, config);
+
   return response.data;
 };
 

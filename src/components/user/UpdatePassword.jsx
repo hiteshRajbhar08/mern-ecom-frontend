@@ -25,9 +25,7 @@ const UpdatePassword = () => {
     if (newPassword !== confirmPassword) {
       alert.error('password do not match');
     }
-
     dispatch(updateUserPassword({ oldPassword, newPassword, confirmPassword }));
-    alert.success('Password Update Successfully');
     navigate('/');
   };
 
