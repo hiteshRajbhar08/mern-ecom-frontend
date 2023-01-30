@@ -17,6 +17,7 @@ import { useSelector } from 'react-redux';
 import UserOptions from './components/layout/header/UserOptions';
 import Profile from './components/user/Profile';
 import ProtectedRoute from './components/routes/ProtectedRoute';
+import UpdateProfile from './components/user/UpdateProfile';
 
 axios.defaults.withCredentials = true;
 
@@ -49,6 +50,14 @@ const App = () => {
             element={
               <ProtectedRoute>
                 <Profile />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/updateProfile"
+            element={
+              <ProtectedRoute>
+                <UpdateProfile />
               </ProtectedRoute>
             }
           />

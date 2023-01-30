@@ -25,18 +25,6 @@ export const registerUser = createAsyncThunk(
   }
 );
 
-// load user
-export const loadUser = createAsyncThunk(
-  'user/loadUser',
-  async (_, thunkAPI) => {
-    try {
-      return await userService.loadUser();
-    } catch (err) {
-      return thunkAPI.rejectWithValue(err.response.data.message);
-    }
-  }
-);
-
 // logout user
 export const logoutUser = createAsyncThunk(
   'user/logoutUser',
@@ -52,9 +40,21 @@ export const logoutUser = createAsyncThunk(
 // update user profile
 export const updateUserProfile = createAsyncThunk(
   'user/updateUserProfile',
-  async (userData, thunkAPI) => {
+  async (formValue, thunkAPI) => {
     try {
-      return await userService.updateUserProfile(userData);
+      return await userService.updateUserProfile(formValue);
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err.response.data.message);
+    }
+  }
+);
+
+// load user
+export const loadUser = createAsyncThunk(
+  'user/loadUser',
+  async (_, thunkAPI) => {
+    try {
+      return await userService.loadUser();
     } catch (err) {
       return thunkAPI.rejectWithValue(err.response.data.message);
     }

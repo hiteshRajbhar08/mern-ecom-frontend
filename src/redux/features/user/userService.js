@@ -28,11 +28,11 @@ const logoutUser = async () => {
 };
 
 // update user profile
-const updateUserProfile = async (userData) => {
+const updateUserProfile = async (formValue) => {
   const config = {
     headers: { 'Content-Type': 'multipart/form-data' },
   };
-  const response = await axios.put('api/v1/update/me', userData, config);
+  const response = await axios.put('api/v1/me/update', formValue, config);
   return response.data;
 };
 
