@@ -19,6 +19,8 @@ import Profile from './components/user/Profile';
 import ProtectedRoute from './components/routes/ProtectedRoute';
 import UpdateProfile from './components/user/UpdateProfile';
 import UpdatePassword from './components/user/UpdatePassword';
+import ForgotPassword from './components/user/ForgotPassword';
+import ResetPassword from './components/user/ResetPassword';
 
 axios.defaults.withCredentials = true;
 
@@ -46,6 +48,8 @@ const App = () => {
           <Route path="/search" element={<Search />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/forget-password" element={<ForgotPassword />} />
+          <Route path="/password/reset/:token" element={<ResetPassword />} />
           <Route
             path="/acount"
             element={

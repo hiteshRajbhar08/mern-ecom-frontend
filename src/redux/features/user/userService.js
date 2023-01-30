@@ -43,8 +43,17 @@ const updateUserPassword = async (formValue) => {
 };
 
 // forgot password
-const forgotPassword = async (formValue) => {
-  const response = await axios.post('api/v1/password/forgot', formValue);
+const forgotPassword = async (email) => {
+  const response = await axios.post('api/v1/password/forgot', email);
+  return response.data;
+};
+
+// reset password
+const resetPassword = async (data) => {
+  const response = await axios.post(
+    `/api/v1/password/reset/${data.token}`,
+    data.passwords
+  );
   return response.data;
 };
 
@@ -56,6 +65,7 @@ const userService = {
   updateUserProfile,
   updateUserPassword,
   forgotPassword,
+  resetPassword,
 };
 
 export default userService;
