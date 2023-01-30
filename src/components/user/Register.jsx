@@ -61,7 +61,6 @@ const Register = () => {
     myForm.set('avatar', avatar);
 
     dispatch(registerUser(myForm));
-    alert.success('Register Successfully');
   };
 
   return (

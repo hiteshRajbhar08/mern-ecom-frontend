@@ -18,6 +18,7 @@ import UserOptions from './components/layout/header/UserOptions';
 import Profile from './components/user/Profile';
 import ProtectedRoute from './components/routes/ProtectedRoute';
 import UpdateProfile from './components/user/UpdateProfile';
+import UpdatePassword from './components/user/UpdatePassword';
 
 axios.defaults.withCredentials = true;
 
@@ -58,6 +59,14 @@ const App = () => {
             element={
               <ProtectedRoute>
                 <UpdateProfile />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/update-password"
+            element={
+              <ProtectedRoute>
+                <UpdatePassword />
               </ProtectedRoute>
             }
           />

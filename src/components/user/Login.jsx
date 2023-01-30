@@ -33,7 +33,6 @@ const Login = () => {
 
     if (email && password) {
       dispatch(loginUser(formValue));
-      alert.success('Login Successfully');
     }
   };
 
