@@ -1,7 +1,13 @@
 import { SpeedDial, SpeedDialAction } from '@mui/material';
-import { Dashboard, Person, ExitToApp, ListAlt } from '@mui/icons-material';
+import {
+  Dashboard,
+  Person,
+  ExitToApp,
+  ListAlt,
+  ShoppingCart,
+} from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
 import { useAlert } from 'react-alert';
 import { logoutUser } from '../../../redux/features/user/userSlice';
@@ -14,12 +20,18 @@ const UserOptions = ({ user }) => {
   const dispatch = useDispatch();
   const alert = useAlert();
 
+  const { cartItems } = useSelector((state) => state.order);
+
   const orders = () => {
     navigate('/orders');
   };
 
   const account = () => {
     navigate('/acount');
+  };
+
+  const cart = () => {
+    navigate('/cart');
   };
 
   const dashboard = () => {
@@ -36,6 +48,15 @@ const UserOptions = ({ user }) => {
   const options = [
     { icon: <ListAlt />, name: 'Orders', func: orders },
     { icon: <Person />, name: 'Profile', func: account },
+    {
+      icon: (
+        <ShoppingCart
+          style={{ color: cartItems.length > 0 ? 'tomato' : 'unset' }}
+        />
+      ),
+      name: `Cart(${cartItems.length})`,
+      func: cart,
+    },
     { icon: <ExitToApp />, name: 'Logout', func: logout },
   ];
 
