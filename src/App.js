@@ -21,6 +21,7 @@ import UpdateProfile from './components/user/UpdateProfile';
 import UpdatePassword from './components/user/UpdatePassword';
 import ForgotPassword from './components/user/ForgotPassword';
 import ResetPassword from './components/user/ResetPassword';
+import Cart from './components/cart/Cart';
 
 axios.defaults.withCredentials = true;
 
@@ -76,6 +77,7 @@ const App = () => {
               </ProtectedRoute>
             }
           />
+          <Route path="/cart" element={<Cart />} />
           <Route path="/product/:id" element={<ProductDetails />} />
         </Routes>
       </main>

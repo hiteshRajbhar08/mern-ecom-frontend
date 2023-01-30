@@ -27,9 +27,18 @@ const orderSlice = createSlice({
       }
       localStorage.setItem('cartItems', JSON.stringify(state.cartItems));
     },
+
+    removeFromCart: (state, { payload }) => {
+      const product = payload;
+
+      state.cartItems = state.cartItems.filter(
+        (item) => item.product !== product
+      );
+      localStorage.setItem('cartItems', JSON.stringify(state.cartItems));
+    },
   },
   extraReducers: {},
 });
 
-export const { addToCart } = orderSlice.actions;
+export const { addToCart, removeFromCart } = orderSlice.actions;
 export default orderSlice.reducer;
