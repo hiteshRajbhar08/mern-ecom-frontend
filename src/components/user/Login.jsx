@@ -43,7 +43,7 @@ const Login = () => {
       dispatch(clearErrors());
     }
     if (isAuthenticated) {
-      navigate('/acount');
+      navigate('/');
     }
   }, [dispatch, error, alert, isAuthenticated, navigate]);
 

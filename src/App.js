@@ -15,6 +15,7 @@ import store from './redux/store';
 import { loadUser } from './redux/features/user/userSlice';
 import { useSelector } from 'react-redux';
 import UserOptions from './components/layout/header/UserOptions';
+import Profile from './components/user/Profile';
 
 axios.defaults.withCredentials = true;
 
@@ -42,6 +43,7 @@ const App = () => {
           <Route path="/search" element={<Search />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/acount" element={<Profile />} />
           <Route path="/product/:id" element={<ProductDetails />} />
         </Routes>
       </main>

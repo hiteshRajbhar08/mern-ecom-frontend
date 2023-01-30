@@ -19,7 +19,7 @@ const UserOptions = ({ user }) => {
   };
 
   const account = () => {
-    navigate('/account');
+    navigate('/acount');
   };
 
   const dashboard = () => {
