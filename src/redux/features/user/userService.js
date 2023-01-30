@@ -36,12 +36,19 @@ const updateUserProfile = async (formValue) => {
   return response.data;
 };
 
+// update user password
+const updateUserPassword = async (formValue) => {
+  const response = await axios.put('api/v1/password/update', formValue);
+  return response.data;
+};
+
 const userService = {
   loginUser,
   registerUser,
   loadUser,
   logoutUser,
   updateUserProfile,
+  updateUserPassword,
 };
 
 export default userService;
