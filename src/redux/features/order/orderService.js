@@ -12,9 +12,16 @@ const getMyOrders = async () => {
   return response.data;
 };
 
+// get order details
+const getOrderDetails = async (id) => {
+  const response = await axios.get(`/api/v1/order/${id}`);
+  return response.data;
+};
+
 const orderService = {
   createOrder,
   getMyOrders,
+  getOrderDetails,
 };
 
 export default orderService;
