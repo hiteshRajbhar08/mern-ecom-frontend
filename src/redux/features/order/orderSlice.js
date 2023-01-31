@@ -1,4 +1,17 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import orderService from './orderService';
+
+// create order
+export const createOrder = createAsyncThunk(
+  'order/createOrder',
+  async (order, thunkAPI) => {
+    try {
+      return await orderService.createOrder(order);
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err.response.data.message);
+    }
+  }
+);
 
 const orderSlice = createSlice({
   name: 'ordersInfo',
@@ -9,6 +22,7 @@ const orderSlice = createSlice({
     shippingInfo: localStorage.getItem('shippingInfo')
       ? JSON.parse(localStorage.getItem('shippingInfo'))
       : {},
+    order: {},
     loading: false,
     error: null,
     success: false,
@@ -39,15 +53,49 @@ const orderSlice = createSlice({
       );
       localStorage.setItem('cartItems', JSON.stringify(state.cartItems));
     },
+
     saveShippingInfo: (state, { payload }) => {
       state.shippingInfo = payload;
 
       localStorage.setItem('shippingInfo', JSON.stringify(payload));
     },
+
+    clearErrors: (state, action) => {
+      state.error = null;
+    },
+
+    successReset: (state, action) => {
+      state.success = false;
+    },
+
+    clearCart: (state, action) => {
+      state.cartItems = [];
+    },
   },
-  extraReducers: {},
+  extraReducers: {
+    extraReducers: (builder) => {
+      builder
+        .addCase(createOrder.pending, (state) => {
+          state.loading = true;
+        })
+        .addCase(createOrder.fulfilled, (state, action) => {
+          state.loading = false;
+          state.order = action.payload.order;
+        })
+        .addCase(createOrder.rejected, (state, action) => {
+          state.loading = false;
+          state.error = action.payload;
+        });
+    },
+  },
 });
 
-export const { addToCart, removeFromCart, saveShippingInfo } =
-  orderSlice.actions;
+export const {
+  addToCart,
+  removeFromCart,
+  saveShippingInfo,
+  clearErrors,
+  successReset,
+  clearCart,
+} = orderSlice.actions;
 export default orderSlice.reducer;
