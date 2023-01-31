@@ -47,7 +47,7 @@ const Payment = () => {
     const order = {
       shippingInfo,
       orderItems: cartItems,
-      itemPrice: orderInfo.subTotal,
+      itemsPrice: orderInfo.subTotal,
       taxPrice: orderInfo.tax,
       shippingPrice: orderInfo.shippingCharges,
       totalPrice: orderInfo.totalPrice,
