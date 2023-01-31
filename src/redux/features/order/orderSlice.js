@@ -13,6 +13,18 @@ export const createOrder = createAsyncThunk(
   }
 );
 
+// get my orders
+export const getMyOrders = createAsyncThunk(
+  'order/getMyOrders',
+  async (_, thunkAPI) => {
+    try {
+      return await orderService.getMyOrders();
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err.response.data.message);
+    }
+  }
+);
+
 const orderSlice = createSlice({
   name: 'ordersInfo',
   initialState: {
@@ -22,6 +34,7 @@ const orderSlice = createSlice({
     shippingInfo: localStorage.getItem('shippingInfo')
       ? JSON.parse(localStorage.getItem('shippingInfo'))
       : {},
+    orders: [],
     order: {},
     loading: false,
     error: null,
@@ -72,21 +85,30 @@ const orderSlice = createSlice({
       state.cartItems = [];
     },
   },
-  extraReducers: {
-    extraReducers: (builder) => {
-      builder
-        .addCase(createOrder.pending, (state) => {
-          state.loading = true;
-        })
-        .addCase(createOrder.fulfilled, (state, action) => {
-          state.loading = false;
-          state.order = action.payload.order;
-        })
-        .addCase(createOrder.rejected, (state, action) => {
-          state.loading = false;
-          state.error = action.payload;
-        });
-    },
+  extraReducers: (builder) => {
+    builder
+      .addCase(createOrder.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(createOrder.fulfilled, (state, action) => {
+        state.loading = false;
+        state.order = action.payload.order;
+      })
+      .addCase(createOrder.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(getMyOrders.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getMyOrders.fulfilled, (state, action) => {
+        state.loading = false;
+        state.orders = action.payload.orders;
+      })
+      .addCase(getMyOrders.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      });
   },
 });
 
